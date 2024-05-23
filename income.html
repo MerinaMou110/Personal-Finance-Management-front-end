@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Manage Income</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    
+</head>
+<body>
+    <header class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">FinanceApp</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="home.html" id="homeButton">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="dashboard.html" id="dashButton">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about" id="aboutButton">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#features" id="featureButton">Features</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="profile.html" id="profileButton">Profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="register.html" id="registerButton">Register</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="login.html" id="loginButton">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" id="logoutButton" onclick="handlelogOut()">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </header>
+    
+    <div class="page-heading">
+        <div class="container">
+            <h3>Manage Income</h3>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb justify-content-center">
+                    <li class="breadcrumb-item"><a href="dashboard.html">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Income</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="d-md-flex justify-content-between mb-3">
+            <div class="d-flex align-items-center mb-md-0 mb-3">
+                <div class="input-group me-md-2">
+                    <input type="date" id="startDate" class="form-control" placeholder="Start Date">
+                    <span class="input-group-text">to</span>
+                    <input type="date" id="endDate" class="form-control" placeholder="End Date">
+                </div>
+                <button class="btn btn-warning mt-2 mt-md-0 g-2" id="filterButton">Filter</button>
+            </div>
+            <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addIncomeModal">Add New Income</button>
+        </div>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Amount</th>
+                    <th>Category</th>
+                    <th>Date</th>
+                    <th>Description</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Income will be inserted here -->
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Add Income Modal -->
+    <div class="modal fade" id="addIncomeModal" tabindex="-1" aria-labelledby="addIncomeModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addIncomeModalLabel">Add New Income</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="addIncomeForm">
+                        <div class="form-group">
+                            <label for="incomeAmount">Amount</label>
+                            <input type="number" class="form-control" id="incomeAmount" name="amount" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="incomeCategory">Category</label>
+                            <input type="text" class="form-control" id="incomeCategory" name="category" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="incomeDate">Date</label>
+                            <input type="date" class="form-control" id="incomeDate" name="date" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="incomeDescription">Description</label>
+                            <textarea class="form-control" id="incomeDescription" name="description"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Add Income</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Income Modal -->
+    <div class="modal fade" id="editIncomeModal" tabindex="-1" aria-labelledby="editIncomeModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editIncomeModalLabel">Edit Income</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="editIncomeForm">
+                        <input type="hidden" id="incomeId" name="incomeId">
+                        <div class="form-group">
+                            <label for="editIncomeAmount">Amount</label>
+                            <input type="number" class="form-control" id="editIncomeAmount" name="amount" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="editIncomeCategory">Category</label>
+                            <input type="text" class="form-control" id="editIncomeCategory" name="category" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="editIncomeDate">Date</label>
+                            <input type="date" class="form-control" id="editIncomeDate" name="date" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="editIncomeDescription">Description</label>
+                            <textarea class="form-control" id="editIncomeDescription" name="description"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Update Income</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="justify-content-center text-center p-5">
+        <h3>Total Income: <span id="totalIncomeAmount">0.00</span></h3>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <p>Privacy Policy | Terms of Service</p>
+            <div class="social-links">
+                <a href="https://www.facebook.com"><i class="fab fa-facebook"></i></a>
+                <a href="https://www.twitter.com"><i class="fab fa-twitter"></i></a>
+                <a href="https://www.linkedin.com"><i class="fab fa-linkedin"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="income.js"></script>
+    <script src="permission.js"></script>
+    <script src="logout.js"></script>
+</body>
+</html>
